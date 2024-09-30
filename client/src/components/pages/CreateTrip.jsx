@@ -144,12 +144,84 @@ import axios from 'axios';
 import { Input } from '../ui/input';
 import { SelectBudgetOptions, SelectDisability, SelectTravelList } from '@/constants/options';
 import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
+
+
+const indianAirports = [
+  'DEL-delhi',
+  'BOM-mumbai',
+  'CCU-kolkata',
+  'BLR-bangalore',
+  'HYD-hyderabad',
+  'MAA-chennai',
+  'COK-kochi',
+  'AMD-ahmedabad',
+  'GOI-goa',
+  'JAI-jaipur',
+  'PNQ-pune',
+  'ATQ-amritsar',
+  'CCJ-kozhikode',
+  'TRV-thiruvananthapuram',
+  'SXR-srinagar',
+  'VTZ-visakhapatnam',
+  'GWL-gwalior',
+  'IDR-indore',
+  'PAB-bilaspur',
+  'IXA-agartala',
+  'IXB-bagdogra',
+  'PAT-patna',
+  'IXD-dehradun',
+  'CNN-kannur',
+  'STV-surat',
+  'BBI-bhubaneswar',
+  'GAU-guwahati',
+  'VNS-varanasi',
+  'TRZ-tiruchirappalli',
+  'NAG-nagpur',
+  'IMF-imphal',
+  'IXM-madurai',
+  'IXZ-port blair',
+  'CDP-kadapa',
+  'VGA-vijayawada',
+  'RJA-rajahmundry',
+  'TIR-tirupati',
+  'IXT-pasighat',
+  'BHO-bhopal',
+  'BHU-bhavnagar',
+  'BHJ-bhuj',
+  'BKB-bikaner',
+  'GOP-gorakhpur',
+  'GUX-guna',
+  'HBX-hubli',
+  'HSS-hissar',
+  'KLH-kolhapur',
+  'KTU-kota',
+  'KUU-kulu',
+  'IXL-leh',
+  'IXI-lilabari',
+  'LKO-lucknow',
+  'LUH-ludhiana',
+  'ISK-nasik',
+  'NVY-neyveli',
+  'OMN-osmanabad',
+  'PGH-pantnagar',
+  'IXP-pathankot',
+  'PNY-pondicherry',
+  'PBD-porbandar',
+  'RTC-ratnagiri',
+  'REW-rewa',
+  'TCR-tuticorin',
+  'UDR-udaipur',
+  'BDQ-vadodara',
+  'WGC-warangal',
+];
 
 const CreateTrip = () => {
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [formData, setFormData] = useState({
-    destination: '',
+    toId: '',
     noOfDays: '',
     budget: '',
     travelCompanion: '',
@@ -187,9 +259,30 @@ const CreateTrip = () => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setInputValue(suggestion.description.trim());
-    setSuggestions([]); // Clear suggestions after selection
-  };
+    let destination = suggestion.description.trim();
+    // Loop through the indianAirports array to find a match
+  indianAirports.forEach((airport) => {
+    const [code, city] = airport.split('-');
+    const regex = new RegExp(`\\b${city}\\b`, 'i'); // Create a regex to match city names case-insensitively
+
+    if (regex.test(destination)) {
+      // Replace the city name with the formatted 'code-city' in the destination
+      destination = destination.replace(regex, `${code}-${city}`);
+    }
+  });
+
+  setInputValue(destination); // Set the updated destination as inputValue
+  setSuggestions([]); // Clear suggestions after selection
+  
+  // Update formData with the modified destination
+  handleInputChange('toId', destination);
+};
+
+  const handleGenerateTrip = () => {
+    console.log(formData);
+    
+    navigate('/flights', { state: { formData } }); // Navigate and pass formData as state
+};
 
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
@@ -278,7 +371,7 @@ const CreateTrip = () => {
         </div>
 
         <div className='my-10 justify-end flex'>
-          <Button onClick={() => console.log(formData)}>Generate Trip</Button>
+          <Button onClick={handleGenerateTrip}>Generate Trip</Button>
         </div>
       </div>
     </div>

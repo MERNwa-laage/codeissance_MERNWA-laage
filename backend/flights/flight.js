@@ -8,6 +8,7 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
             fromId: fromId || 'BOM.AIRPORT',
             toId: toId || 'DEL.AIRPORT',
             departDate: departDate || '2024-10-04',
+            returnDate: returnDate || null,
             pageNo: '1',
             adults: adults || '1',
             children: children || '0,17',
@@ -36,6 +37,7 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
                         const airline = segment.legs[0].carriersData[0].name; // Ensure this array exists and is valid
                         const flightNumber = segment.legs[0].flightInfo.flightNumber;
                         const totalCost = offer.priceBreakdown.total.units + '.' + (offer.priceBreakdown.total.nanos / 1e9).toFixed(9);
+                        // const departureCity = 
 
                         return {
                             airline,
@@ -57,6 +59,8 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
             return { error: 'No flight offers found in the response' };
         }
     } catch (error) {
+        console.log(error);
+        
         console.error('Error fetching flight data:', error);
         throw new Error('Error fetching flight data');
     }

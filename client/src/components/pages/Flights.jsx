@@ -7,6 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon } from 'lucide-react';
 import Navbar from '../shared/Navbar';
 import FlightCard from '../shared/FlightCard';
+import { useLocation } from 'react-router-dom';
 
 const indianAirports = [
   'DEL-delhi',
@@ -78,10 +79,12 @@ const indianAirports = [
 ];
 
 const Flights = () => {
+  const location = useLocation();
+    // const { formData } = location.state || {}; // Retrieve formData from state
   const [flightResults, setFlightResults] = useState([]);
   const [formData, setFormData] = useState({
     fromId: '',
-    toId: '',
+    toId: location.state.formData.toId || '',
     departDate: '',
     returnDate: '',
     adults: '1',
@@ -89,6 +92,8 @@ const Flights = () => {
     sort: 'CHEAPEST',
     cabinClass: 'ECONOMY',
   });
+  console.log(location.state.formData.toId);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
