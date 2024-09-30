@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from "./components/pages/Home"
 import Dashboard from "./components/pages/Dashboard"
+import Login from './components/pages/Login'
 
 
 const appRouter = createBrowserRouter([
@@ -14,6 +14,10 @@ const appRouter = createBrowserRouter([
   {
     path:'/dashboard',
     element:<Dashboard/>
+  },
+  {
+    path:'/login',
+    element:<Login/>
   },
 ])
 
