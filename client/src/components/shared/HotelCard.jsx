@@ -26,7 +26,7 @@ const HotelCard = ({ hotel }) => {
         </div>
         <p className="text-gray-700 text-base mb-2">{hotel.description}</p>
         <p className="text-gray-900 font-bold text-xl">
-          ₹{hotel.pricing} <span className="text-sm font-normal">per night</span>
+          ${hotel.price} <span className="text-sm font-normal">per night</span>
         </p>
       </div>
       <div className="px-6 pt-4 pb-2">

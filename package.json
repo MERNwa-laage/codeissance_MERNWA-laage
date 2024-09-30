@@ -1,5 +1,10 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "react-speech-recognition": "^3.10.0"
+=======
+    "howler": "^2.2.4",
+    "react-player": "^2.16.0"
+>>>>>>> b3be214b0c95aa37c02901803a258e32d09b3fb7
   }
 }
