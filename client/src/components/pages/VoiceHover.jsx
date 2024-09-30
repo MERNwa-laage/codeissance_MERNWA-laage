@@ -1,15 +1,17 @@
 import React from 'react';
-import useTextToSpeech from '../shared/useTextToSpeech';
+import { useTextToSpeech } from '../shared/useTextToSpeech';
 
 const VoiceHover = ({ children }) => {
-  const { speak, stop } = useTextToSpeech();
+  const { speak, stop, enabled } = useTextToSpeech();
 
   const addSpeechProps = (element) => {
-    if ( React.isValidElement(element)) {
+    if (React.isValidElement(element)) {
       const newProps = {
         onMouseEnter: () => {
-          const text = extractText(element);
-          if (text) speak(text);
+          if (enabled) {
+            const text = extractText(element);
+            if (text) speak(text);
+          }
         },
         onMouseLeave: stop,
       };

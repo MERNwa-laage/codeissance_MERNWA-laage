@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 
-const useTextToSpeech = () => {
+const TextToSpeechContext = createContext();
+
+export const TextToSpeechProvider = ({ children }) => {
   const [voices, setVoices] = useState([]);
   const [speaking, setSpeaking] = useState(false);
+  const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
@@ -17,6 +20,7 @@ const useTextToSpeech = () => {
   }, []);
 
   const speak = (text, voice = null) => {
+    if (!enabled) return;
     const synth = window.speechSynthesis;
     if (speaking) {
       synth.cancel();
@@ -36,7 +40,20 @@ const useTextToSpeech = () => {
     setSpeaking(false);
   };
 
-  return { speak, stop, voices, speaking };
+  const toggleEnabled = () => {
+    setEnabled(prev => !prev);
+    if (speaking) {
+      stop();
+    }
+  };
+
+  return (
+    <TextToSpeechContext.Provider value={{ speak, stop, voices, speaking, enabled, toggleEnabled }}>
+      {children}
+    </TextToSpeechContext.Provider>
+  );
 };
+
+export const useTextToSpeech = () => useContext(TextToSpeechContext);
 
 export default useTextToSpeech;
