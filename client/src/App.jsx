@@ -1,45 +1,49 @@
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from "./components/pages/Home";
+import Dashboard from "./components/pages/Dashboard";
+import Flights from './components/pages/Flights';
+import Login from './components/pages/Login';
+import Hotels from './components/pages/Hotels';
+import CreateTrip from './components/pages/CreateTrip';
+import Chatbot from './components/shared/Chatbot'; // Import the Chatbot component
 
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Home from "./components/pages/Home"
-import Dashboard from "./components/pages/Dashboard"
-import Flights from './components/pages/Flights'
-import Login from './components/pages/Login'
-import Hotels from './components/pages/Hotels'
-import CreateTrip from './components/pages/CreateTrip'
-
+const AppLayout = ({ children }) => (
+  <>
+    {children}
+    <Chatbot /> {/* Add the Chatbot component here */}
+  </>
+);
 
 const appRouter = createBrowserRouter([
   {
     path:'/',
-    element:<Home/>
+    element: <AppLayout><Home/></AppLayout>
   },
   {
     path:'/dashboard',
-    element:<Dashboard/>
+    element: <AppLayout><Dashboard/></AppLayout>
   },
   {
     path:'/flights',
-    element:<Flights/>
+    element: <AppLayout><Flights/></AppLayout>
   },
   {
     path:'/login',
-    element:<Login/>
+    element: <AppLayout><Login/></AppLayout>
   },
   {
     path:'/hotels',
-    element:<Hotels/>
+    element: <AppLayout><Hotels/></AppLayout>
   },
   {
     path:'/createtrip',
-    element:<CreateTrip/>
+    element: <AppLayout><CreateTrip/></AppLayout>
   },
-])
+]);
 
 export default function App() {
   return (
-    <div>
-      <RouterProvider router={appRouter}/>
-    </div>
-  )
+    <RouterProvider router={appRouter}/>
+  );
 }
