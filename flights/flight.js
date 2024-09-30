@@ -14,7 +14,7 @@ app.get('/search-flights', async (req, res) => {
       departDate: '2024-10-04',
       pageNo: '1',
       adults: '1',
-      children: '0,17',
+      children: '4,17',
       sort: 'CHEAPEST',
       cabinClass: 'ECONOMY',
       currency_code: 'INR',
