@@ -27,8 +27,8 @@ const Navbar = () => {
   const handleComplaint=()=>{
     navigate('/complain')
   }
-  const handlePro=()=>{
-    navigate('/profile')
+  const handleFlights=()=>{
+    navigate('/flights')
   }
   return (
     <div className='bg-[#E6E6E6] shadow-black'>
@@ -39,12 +39,13 @@ const Navbar = () => {
       <div className='flex'>
         <ul className='flex py-4 mx-4'>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleDash}>Home</li>
+          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleFlights}>Flights</li>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleComplaint}>My Bookings</li>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' >About Us</li>
         </ul>
         {!user ? 
         <div className='my-3 gap-4 hidden md:block '>
-          <Button className='mx-4 bg-[#115579]' onClick={handleLogin}>Sign in</Button>
+          <Button className='mx-4 bg-[#115579]' onClick={handleLogin}>Log out</Button>
         </div>
       :
       <div className='my-3 gap-4 hidden md:block '>
