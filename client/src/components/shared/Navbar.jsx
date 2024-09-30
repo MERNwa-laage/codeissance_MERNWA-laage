@@ -38,7 +38,7 @@ const Navbar = () => {
       </div>
       <div className='flex'>
         <ul className='flex py-4 mx-4'>
-          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleDash}>Home</li>
+          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleHome}>Home</li>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleFlights}>Flights</li>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleComplaint}>My Bookings</li>
           <li className='px-4 text-l font-semibold  hover:underline hidden md:block' >About Us</li>
