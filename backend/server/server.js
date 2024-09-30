@@ -11,12 +11,15 @@ app.use(cors());
 //Flight search
 app.get('/search-flights', async (req, res) => {
     const { fromId, toId, departDate, adults, children, sort, cabinClass, currency_code } = req.query;
-
+    console.log(cabinClass);
+    
     try {
         // Call the searchFlights function with query parameters
         const flights = await searchFlights(fromId, toId, departDate, adults, children, sort, cabinClass, currency_code);
         
         // Send the flight data as response
+        console.log(flights);
+        
         res.json(flights);
     } catch (error) {
         console.error('Error:', error.message);

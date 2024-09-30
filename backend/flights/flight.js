@@ -17,7 +17,7 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
         },
         headers: {
             'x-rapidapi-host': 'booking-com15.p.rapidapi.com',
-            'x-rapidapi-key': '26e2ba2627msh59cbe6ae0c921a9p1ea339jsnf2184812b96d', // Secure this key in production!
+            'x-rapidapi-key': '570cb600fbmsh18588d46ee19a8bp1ba9c8jsn5ff6206f8da1', // Secure this key in production!
         },
     };
 
