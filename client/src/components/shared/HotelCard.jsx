@@ -1,6 +1,7 @@
 import React from 'react';
-import { FaStar } from 'react-icons/fa';
+
 import Navbar from './Navbar';
+import { Star } from 'lucide-react';
 
 const HotelCard = ({ hotel }) => {
   return (<div>
@@ -13,7 +14,7 @@ const HotelCard = ({ hotel }) => {
           {[...Array(5)].map((star, index) => {
             const ratingValue = index + 1;
             return (
-              <FaStar
+              <Star
                 key={index}
                 className={`h-5 w-5 ${
                   ratingValue <= hotel.rating ? 'text-yellow-400' : 'text-gray-300'
