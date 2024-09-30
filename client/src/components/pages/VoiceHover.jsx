@@ -5,7 +5,7 @@ const VoiceHover = ({ children }) => {
   const { speak, stop } = useTextToSpeech();
 
   const addSpeechProps = (element) => {
-    if (React.isValidElement(element)) {
+    if ( React.isValidElement(element)) {
       const newProps = {
         onMouseEnter: () => {
           const text = extractText(element);
