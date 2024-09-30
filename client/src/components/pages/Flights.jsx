@@ -8,6 +8,7 @@ import { CalendarIcon } from 'lucide-react';
 import Navbar from '../shared/Navbar';
 import FlightCard from '../shared/FlightCard';
 import { useLocation } from 'react-router-dom';
+import VoiceHover from './VoiceHover';
 
 const indianAirports = [
   'DEL-delhi',
@@ -125,13 +126,14 @@ const Flights = () => {
   };
 
   return (
+    
     <div>
       <Navbar />
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-4">
         <form className="flex flex-wrap items-end gap-4" onSubmit={handleSubmit}>
           {/* From Select */}
           <Select onValueChange={(value) => handleInputChange('fromId', value)}>
-            <SelectTrigger className="h-14">
+            <SelectTrigger className="h-14 max-w-[400px]">
               <SelectValue placeholder="Select origin" />
             </SelectTrigger>
             <SelectContent>
@@ -148,7 +150,7 @@ const Flights = () => {
 
           {/* To Select */}
           <Select onValueChange={(value) => handleInputChange('toId', value)}>
-            <SelectTrigger className="h-14">
+            <SelectTrigger className="h-14 max-w-[400px]">
               <SelectValue placeholder="Select destination" />
             </SelectTrigger>
             <SelectContent>
@@ -166,7 +168,7 @@ const Flights = () => {
           {/* Departure Date */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal">
+              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal max-w-[400px]">
                 <div className="flex items-center">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   <span>{formData.departDate || 'Pick a date'}</span>
@@ -185,7 +187,7 @@ const Flights = () => {
           {/* Return Date */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal">
+              <Button variant="outline" className="w-full justify-start text-left font-normal h-14 max-w-[400px]">
                 <div className="flex items-center">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   <span>{formData.returnDate || 'Pick a date'}</span>
@@ -203,7 +205,7 @@ const Flights = () => {
 
           {/* Adults Select */}
           <Select onValueChange={(value) => handleInputChange('adults', value)}>
-            <SelectTrigger className="h-14">
+            <SelectTrigger className="h-14 max-w-[400px]">
               <SelectValue placeholder="1 Adult" />
             </SelectTrigger>
             <SelectContent>
@@ -215,7 +217,7 @@ const Flights = () => {
 
           {/* Children Select */}
           <Select onValueChange={(value) => handleInputChange('children', value)}>
-            <SelectTrigger className="h-14">
+            <SelectTrigger className="h-14 max-w-[400px]">
               <SelectValue placeholder="0 Children" />
             </SelectTrigger>
             <SelectContent>
