@@ -174,7 +174,7 @@ const CreateTrip = () => {
 
     if (newInputValue) {
       try {
-        const response = await axios.get(`http://localhost:5000/api/autocomplete`, {
+        const response = await axios.get(`http://localhost:3000/api/autocomplete`, {
           params: { input: newInputValue },
         });
         setSuggestions(response.data.predictions);
@@ -187,7 +187,6 @@ const CreateTrip = () => {
   };
 
   const handleSuggestionClick = (suggestion) => {
-    // Append the selected suggestion to the current input value
     setInputValue(suggestion.description.trim());
     setSuggestions([]); // Clear suggestions after selection
   };
@@ -233,7 +232,7 @@ const CreateTrip = () => {
             {SelectBudgetOptions.map((item, index) => (
               <div 
                 key={index} 
-                className='p-4 border rounded-lg cursor-pointer hover:shadow-lg'
+                className={`p-4 border rounded-lg cursor-pointer hover:shadow-lg ${formData.budget === item.title ? 'border-blue-500 bg-blue-100' : ''}`}
                 onClick={() => handleInputChange('budget', item.title)}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
@@ -250,7 +249,7 @@ const CreateTrip = () => {
             {SelectTravelList.map((item, index) => (
               <div 
                 key={index} 
-                className='p-4 border rounded-lg cursor-pointer hover:shadow-lg'
+                className={`p-4 border rounded-lg cursor-pointer hover:shadow-lg ${formData.travelCompanion === item.title ? 'border-blue-500 bg-blue-100' : ''}`}
                 onClick={() => handleInputChange('travelCompanion', item.title)}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
@@ -267,7 +266,7 @@ const CreateTrip = () => {
             {SelectDisability.map((item, index) => (
               <div 
                 key={index} 
-                className='p-4 border rounded-lg cursor-pointer hover:shadow-lg'
+                className={`p-4 border rounded-lg cursor-pointer hover:shadow-lg ${formData.disability === item.title ? 'border-blue-500 bg-blue-100' : ''}`}
                 onClick={() => handleInputChange('disability', item.title)}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>

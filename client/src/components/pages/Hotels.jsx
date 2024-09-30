@@ -9,7 +9,7 @@ const Hotels = () => {
     useEffect(() => {
         const fetchHotels = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/hotels'); // Adjust the URL as necessary
+                const response = await axios.get('http://localhost:3000/api/hotels'); // Adjust the URL as necessary
                 setHotelData(response.data); // Set the state with the fetched data
             } catch (error) {
                 console.error('Error fetching hotels:', error);

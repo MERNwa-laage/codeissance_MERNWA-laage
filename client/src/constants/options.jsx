@@ -8,21 +8,21 @@ export const SelectTravelList=[
     },
     {
         id:2,
-        title:'Just Me',
+        title:'Couple',
         desc:'A sole travel exp',
         icon:'💀',
         people:'1 person'
     },
     {
         id:3,
-        title:'Just Me',
+        title:'Family',
         desc:'A sole travel exp',
         icon:'💀',
         people:'1 person'
     },
     {
         id:4,
-        title:'Just Me',
+        title:'Friends',
         desc:'A sole travel exp',
         icon:'💀',
         people:'1 person'
