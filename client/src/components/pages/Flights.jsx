@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon } from 'lucide-react';
 import Navbar from '../shared/Navbar';
 import FlightCard from '../shared/FlightCard';
-import VoiceHover from './VoiceHover';
+import { useLocation } from 'react-router-dom';
 
 const indianAirports = [
   'DEL-delhi',
@@ -79,10 +79,12 @@ const indianAirports = [
 ];
 
 const Flights = () => {
+  const location = useLocation();
+    // const { formData } = location.state || {}; // Retrieve formData from state
   const [flightResults, setFlightResults] = useState([]);
   const [formData, setFormData] = useState({
     fromId: '',
-    toId: '',
+    toId: location.state.formData.toId || '',
     departDate: '',
     returnDate: '',
     adults: '1',
@@ -90,6 +92,8 @@ const Flights = () => {
     sort: 'CHEAPEST',
     cabinClass: 'ECONOMY',
   });
+  console.log(location.state.formData.toId);
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -121,14 +125,13 @@ const Flights = () => {
   };
 
   return (
-    
     <div>
       <Navbar />
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-4">
         <form className="flex flex-wrap items-end gap-4" onSubmit={handleSubmit}>
           {/* From Select */}
           <Select onValueChange={(value) => handleInputChange('fromId', value)}>
-            <SelectTrigger className="h-14 max-w-[400px]">
+            <SelectTrigger className="h-14">
               <SelectValue placeholder="Select origin" />
             </SelectTrigger>
             <SelectContent>
@@ -145,7 +148,7 @@ const Flights = () => {
 
           {/* To Select */}
           <Select onValueChange={(value) => handleInputChange('toId', value)}>
-            <SelectTrigger className="h-14 max-w-[400px]">
+            <SelectTrigger className="h-14">
               <SelectValue placeholder="Select destination" />
             </SelectTrigger>
             <SelectContent>
@@ -163,7 +166,7 @@ const Flights = () => {
           {/* Departure Date */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal max-w-[400px]">
+              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal">
                 <div className="flex items-center">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   <span>{formData.departDate || 'Pick a date'}</span>
@@ -182,7 +185,7 @@ const Flights = () => {
           {/* Return Date */}
           <Popover>
             <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full justify-start text-left font-normal h-14 max-w-[400px]">
+              <Button variant="outline" className="w-full h-14 justify-start text-left font-normal">
                 <div className="flex items-center">
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   <span>{formData.returnDate || 'Pick a date'}</span>
@@ -200,7 +203,7 @@ const Flights = () => {
 
           {/* Adults Select */}
           <Select onValueChange={(value) => handleInputChange('adults', value)}>
-            <SelectTrigger className="h-14 max-w-[400px]">
+            <SelectTrigger className="h-14">
               <SelectValue placeholder="1 Adult" />
             </SelectTrigger>
             <SelectContent>
@@ -212,7 +215,7 @@ const Flights = () => {
 
           {/* Children Select */}
           <Select onValueChange={(value) => handleInputChange('children', value)}>
-            <SelectTrigger className="h-14 max-w-[400px]">
+            <SelectTrigger className="h-14">
               <SelectValue placeholder="0 Children" />
             </SelectTrigger>
             <SelectContent>

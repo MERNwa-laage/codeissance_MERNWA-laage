@@ -1,16 +1,6 @@
-import express from 'express';
 import axios from 'axios';
-import cors from 'cors';
 
-const app = express();
-const port = 3000;
-app.use(cors());
-
-app.get('/search-flights', async (req, res) => {
-    console.log("HI");
-    
-    const { fromId, toId, departDate, adults, children, sort, cabinClass, currency_code } = req.query;
-  
+export const searchFlights = async (fromId, toId, departDate, adults, children, sort, cabinClass, currency_code) => {
     const options = {
         method: 'GET',
         url: 'https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights',
@@ -18,6 +8,7 @@ app.get('/search-flights', async (req, res) => {
             fromId: fromId || 'BOM.AIRPORT',
             toId: toId || 'DEL.AIRPORT',
             departDate: departDate || '2024-10-04',
+            returnDate: returnDate || null,
             pageNo: '1',
             adults: adults || '1',
             children: children || '0,17',
@@ -27,28 +18,26 @@ app.get('/search-flights', async (req, res) => {
         },
         headers: {
             'x-rapidapi-host': 'booking-com15.p.rapidapi.com',
-            'x-rapidapi-key': '26e2ba2627msh59cbe6ae0c921a9p1ea339jsnf2184812b96d', // Don't forget to use a secure method to store your API key!
+            'x-rapidapi-key': '26e2ba2627msh59cbe6ae0c921a9p1ea339jsnf2184812b96d', // Secure this key in production!
         },
     };
-  
+
     try {
         const response = await axios.request(options);
-        // console.log(response.data);
-        
+
         if (response.data && response.data.data.flightOffers && response.data.data.flightOffers.length > 0) {
             const flightOffers = response.data.data.flightOffers;
 
             const extractedFlights = flightOffers.map(offer => {
-                // Ensure segments array exists and is not empty
                 if (offer.segments && offer.segments.length > 0) {
                     const segment = offer.segments[0];
 
-                    // Ensure legs array exists and is not empty
                     if (segment.legs && segment.legs.length > 0) {
                         const { departureTime, arrivalTime } = segment.legs[0];
                         const airline = segment.legs[0].carriersData[0].name; // Ensure this array exists and is valid
                         const flightNumber = segment.legs[0].flightInfo.flightNumber;
                         const totalCost = offer.priceBreakdown.total.units + '.' + (offer.priceBreakdown.total.nanos / 1e9).toFixed(9);
+                        // const departureCity = 
 
                         return {
                             airline,
@@ -64,21 +53,15 @@ app.get('/search-flights', async (req, res) => {
                     return { error: 'No segments found for this offer' };
                 }
             });
-            console.log(extractedFlights);
-            
-            res.json(extractedFlights);
+
+            return extractedFlights;
         } else {
-            res.status(404).json({ error: 'No flight offers found in the response' });
+            return { error: 'No flight offers found in the response' };
         }
     } catch (error) {
+        console.log(error);
+        
         console.error('Error fetching flight data:', error);
-        res.status(500).send('Error fetching flight data');
+        throw new Error('Error fetching flight data');
     }
-});
-
-
-  
-
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+};
