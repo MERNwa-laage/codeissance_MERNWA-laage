@@ -34,13 +34,13 @@ const Navbar = () => {
     <div className='bg-[#E6E6E6] shadow-black'>
     <div className='flex justify-between w-11/12 mx-auto'>
       <div className='py-2'>
-        <p className='text-2xl font-semibold mt-1'><span className='text-[#115579]'>Aapka</span>Rakshak</p> 
+        <p className='text-2xl font-semibold mt-1'><span className='text-[#115579]'>Div</span>Yatra</p> 
       </div>
       <div className='flex'>
         <ul className='flex py-4 mx-4'>
-          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleDash}>Dashboard</li>
-          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleComplaint}>Post a Complaint</li>
-          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' >Community Forum</li>
+          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleDash}>Home</li>
+          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' onClick={handleComplaint}>My Bookings</li>
+          <li className='px-4 text-l font-semibold  hover:underline hidden md:block' >About Us</li>
         </ul>
         {!user ? 
         <div className='my-3 gap-4 hidden md:block '>
