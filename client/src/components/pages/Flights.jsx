@@ -1,14 +1,12 @@
 import React from 'react';
 import Navbar from '../shared/Navbar';
-import Hero from '../shared/Hero';
 
-const Home = () => {
+const Flights = () => {
   return (
     <div>
       <Navbar/>
-      <Hero/>
     </div>
   );
 }
 
-export default Home;
+export default Flights;
