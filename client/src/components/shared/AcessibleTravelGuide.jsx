@@ -1,55 +1,131 @@
 import React, { useState } from 'react';
 
+// PlaceCard component
+const PlaceCard = ({ place }) => {
+  return (
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <img 
+        src={place.image} 
+        alt={place.name} 
+        className="w-full h-48 object-cover"
+      />
+      <div className="p-4">
+        <h3 className="text-xl font-semibold mb-2">{place.name}</h3>
+        <p className="text-gray-600 mb-2">{place.description}</p>
+        <div className="mb-2">
+          <strong className="text-gray-700">Accessibility Features:</strong>
+          <ul className="list-disc list-inside">
+            {place.accessibilityFeatures.map((feature, index) => (
+              <li key={index} className="text-gray-600">{feature}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-700">Rating: {place.rating}/5</span>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300">
+            More Info
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main AccessibleTravelGuide component
 const AccessibleTravelGuide = () => {
   const [disability, setDisability] = useState('');
   const [destination, setDestination] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  // Dummy data
+  const dummyPlaces = [
+    {
+      id: 1,
+      name: "Accessible Beach Resort",
+      image: "https://example.com/beach-resort.jpg",
+      description: "A beautiful beachfront resort with full wheelchair accessibility and trained staff for various disabilities.",
+      accessibilityFeatures: [
+        "Wheelchair ramps",
+        "Accessible rooms",
+        "Beach wheelchairs available",
+        "Visual alarms"
+      ],
+      rating: 4.8
+    },
+    {
+      id: 2,
+      name: "Inclusive Adventure Park",
+      image: "https://example.com/adventure-park.jpg",
+      description: "An adventure park designed for all abilities, featuring adaptive equipment and sensory-friendly areas.",
+      accessibilityFeatures: [
+        "Adaptive zip lines",
+        "Sensory-friendly quiet zones",
+        "Braille signage",
+        "Accessible restrooms"
+      ],
+      rating: 4.5
+    },
+    {
+      id: 3,
+      name: "Universal Design Museum",
+      image: "https://example.com/ud-museum.jpg",
+      description: "A museum showcasing universal design principles with exhibits accessible to visitors of all abilities.",
+      accessibilityFeatures: [
+        "Audio descriptions",
+        "Tactile exhibits",
+        "Sign language tours",
+        "Wheelchair accessible throughout"
+      ],
+      rating: 4.9
+    }
+  ];
 
   const handleSearch = () => {
-    console.log('Searching for:', { disability, destination });
-    // Implement your search logic here
+    // Filter the dummy data based on the search criteria
+    const filteredResults = dummyPlaces.filter(place => 
+      place.name.toLowerCase().includes(destination.toLowerCase()) ||
+      place.accessibilityFeatures.some(feature => 
+        feature.toLowerCase().includes(disability.toLowerCase())
+      )
+    );
+    setSearchResults(filteredResults);
   };
 
   return (
-    <div className="bg-gray-100 py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-            <span className="block text-red-500 mb-2">Accessible Travel Guide</span>
-            <span className="block">Plan Your Journey with Confidence</span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Find accessible destinations tailored to your needs. We provide personalized recommendations for wheelchair-friendly, braille-friendly, and more.
-          </p>
-          
-          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <select 
-              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300"
-              value={disability}
-              onChange={(e) => setDisability(e.target.value)}
-            >
-              <option value="">Select Disability</option>
-              <option value="wheelchair">Wheelchair User</option>
-              <option value="visual">Visually Impaired</option>
-              <option value="hearing">Hearing Impaired</option>
-              <option value="cognitive">Cognitive Disability</option>
-            </select>
-            
-            <input 
-              type="text" 
-              placeholder="Enter Destination"
-              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-gray-300"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-            />
-            
-            <button 
-              className="w-full sm:w-auto bg-black text-white font-bold py-2 px-8 rounded-lg hover:bg-gray-800 transition duration-300"
-              onClick={handleSearch}
-            >
-              Search
-            </button>
-          </div>
-        </div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold text-center mb-8">Accessible Travel Guide</h1>
+      
+      <div className="mb-8 flex flex-col sm:flex-row gap-4">
+        <input
+          type="text"
+          placeholder="Enter destination"
+          value={destination}
+          onChange={(e) => setDestination(e.target.value)}
+          className="flex-1 p-2 border rounded"
+        />
+        <select
+          value={disability}
+          onChange={(e) => setDisability(e.target.value)}
+          className="flex-1 p-2 border rounded"
+        >
+          <option value="">Select disability</option>
+          <option value="wheelchair">Wheelchair user</option>
+          <option value="visual">Visual impairment</option>
+          <option value="hearing">Hearing impairment</option>
+          <option value="sensory">Sensory needs</option>
+        </select>
+        <button 
+          onClick={handleSearch}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300"
+        >
+          Search
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {searchResults.map(place => (
+          <PlaceCard key={place.id} place={place} />
+        ))}
       </div>
     </div>
   );
