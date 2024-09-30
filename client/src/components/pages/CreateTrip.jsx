@@ -4,6 +4,8 @@ import { Input } from '../ui/input';
 import { SelectBudgetOptions, SelectDisability, SelectTravelList } from '@/constants/options';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../shared/Navbar';
+import Footer from '../shared/Footer';
 
 const indianAirports = [
   'DEL-delhi',
@@ -206,6 +208,8 @@ const CreateTrip = () => {
   };
 
   return (
+    <div>
+      <Navbar/>
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
       <h1 className='font-bold text-3xl'>Tell us about your travel preferences</h1>
       <p className='mt-3 text-gray-500 text-xl'>
@@ -302,6 +306,8 @@ const CreateTrip = () => {
           <Button onClick={handleGenerateTrip}>Generate Trip</Button>
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

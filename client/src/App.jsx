@@ -1,11 +1,9 @@
 // App.js
-import React from 'react';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from "./components/pages/Home";
 import Dashboard from "./components/pages/Dashboard";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/pages/Home';
-import Dashboard from './components/pages/Dashboard';
 import Flights from './components/pages/Flights';
 import Login from './components/pages/Login';
 import Hotels from './components/pages/Hotels';
@@ -76,11 +74,6 @@ import SignLanguageNavigation from './SignLanguageNavigation';
 export default function App() {
   return (
     <TextToSpeechProvider>
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-    </TextToSpeechProvider>
-    <RouterProvider router={appRouter}/>
     <BrowserRouter>
       <VoiceNavigation />
       <SignLanguageNavigation />
@@ -93,5 +86,6 @@ export default function App() {
         <Route path="/createtrip" element={<CreateTrip />} />
       </Routes>
     </BrowserRouter>
+    </TextToSpeechProvider>
   );
 }
