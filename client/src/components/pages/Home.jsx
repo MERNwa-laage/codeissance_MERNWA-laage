@@ -6,10 +6,8 @@ import VoiceHover from './VoiceHover';
 const Home = () => {
   return (
     <div>
-      <VoiceHover>
         <Navbar />
         <Hero />
-      </VoiceHover>
     </div>
   );
 }
