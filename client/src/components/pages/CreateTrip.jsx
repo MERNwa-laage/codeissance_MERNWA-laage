@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import axios from 'axios';
 import { Input } from '../ui/input';
 import { SelectBudgetOptions, SelectDisability } from '@/constants/options';
@@ -7,6 +7,11 @@ import { Button } from '../ui/button';
 const CreateTrip = () => {
   const [inputValue, setInputValue] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+
+  // Effect to log inputValue whenever it changes
+  useEffect(() => {
+    console.log(inputValue);
+  }, [inputValue]); // This runs every time inputValue changes
 
   const handleInputChange = async (e) => {
     const newInputValue = e.target.value; // Get the new input value
@@ -33,6 +38,8 @@ const CreateTrip = () => {
     // Append the selected suggestion to the current input value
     setInputValue(suggestion.description.trim());
     setSuggestions([]); // Clear suggestions after selection
+    // console.log(inputValue);
+    
   };
 
   return (
