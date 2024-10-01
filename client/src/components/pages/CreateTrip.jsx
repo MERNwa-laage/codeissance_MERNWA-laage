@@ -517,6 +517,7 @@ const handleFlightSelect = (flight) => {
       <button onClick={handleSubmit}>Submit</button>
     </div>
     </div>
+    </div>
   ) 
   } 
 
