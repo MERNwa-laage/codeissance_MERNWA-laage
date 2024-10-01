@@ -1,80 +1,93 @@
-// VoiceNavigation.js
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const VoiceNavigation = () => {
+  const [isListening, setIsListening] = useState(false);
+  const [recognition, setRecognition] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('VoiceNavigation mounted');
+    if ('webkitSpeechRecognition' in window) {
+      const recognitionInstance = new window.webkitSpeechRecognition();
+      recognitionInstance.continuous = true;
+      recognitionInstance.interimResults = true;
 
-    // Check if SpeechRecognition is supported
-    if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
-      console.error('Speech Recognition not supported');
-      return;
+      recognitionInstance.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognitionInstance.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionInstance.onresult = (event) => {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            const command = event.results[i][0].transcript.toLowerCase().trim();
+            handleVoiceCommand(command);
+          }
+        }
+      };
+
+      setRecognition(recognitionInstance);
     }
 
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
-
-    recognition.onstart = () => {
-      console.log('Voice recognition started');
-    };
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript.toLowerCase();
-      console.log('Recognized: ', transcript);
-
-      switch (transcript) {
-        case 'go to home':
-          console.log('Navigating to home');
-          navigate('/');
-          break;
-        case 'go to dashboard':
-          console.log('Navigating to dashboard');
-          navigate('/dashboard');
-          break;
-        case 'show flights':
-          console.log('Navigating to flights');
-          navigate('/flights');
-          break;
-        case 'log in':
-          console.log('Navigating to login');
-          navigate('/login');
-          break;
-        case 'view hotels':
-          console.log('Navigating to hotels');
-          navigate('/hotels');
-          break;
-        case 'create a trip':
-          console.log('Navigating to create a trip');
-          navigate('/createtrip');
-          break;
-        default:
-          console.log('Command not recognized: ', transcript);
+    return () => {
+      if (recognition) {
+        recognition.stop();
       }
     };
+  }, []);
 
-    recognition.onerror = (event) => {
-      console.error('Speech recognition error: ', event.error);
-    };
-
-    recognition.onend = () => {
-      console.log('Voice recognition ended');
-      recognition.start(); // Restart recognition
-    };
-
-    recognition.start();
-    console.log('Voice recognition initiated');
-
-    return () => {
-      recognition.stop();
-      console.log('Voice recognition stopped');
-    };
+  const handleVoiceCommand = useCallback((command) => {
+    switch (command) {
+      case 'go to home':
+        navigate('/');
+        break;
+      case 'go to dashboard':
+        navigate('/dashboard');
+        break;
+      case 'go to flights':
+        navigate('/flights');
+        break;
+      case 'go to login':
+        navigate('/login');
+        break;
+      case 'go to hotels':
+        navigate('/hotels');
+        break;
+      case 'create trip':
+        navigate('/createtrip');
+        break;
+      default:
+        console.log('Unknown command:', command);
+    }
   }, [navigate]);
 
-  return null; // This component does not render anything
+  const toggleListening = () => {
+    if (recognition) {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        recognition.start();
+      }
+    } else {
+      console.error('Speech recognition not supported');
+    }
+  };
+
+  return (
+    <div className="fixed bottom-4 right-4">
+      <button
+        onClick={toggleListening}
+        className={`p-2 rounded-full ${
+          isListening ? 'bg-red-500' : 'bg-blue-500'
+        } text-white`}
+      >
+        {isListening ? 'Stop Listening' : 'Start Listening'}
+      </button>
+    </div>
+  );
 };
 
 export default VoiceNavigation;

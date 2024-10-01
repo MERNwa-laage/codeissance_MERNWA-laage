@@ -1,8 +1,9 @@
 // App.js
-import React from 'react';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from "./components/pages/Home";
 import Dashboard from "./components/pages/Dashboard";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Flights from './components/pages/Flights';
 import Login from './components/pages/Login';
 import Hotels from './components/pages/Hotels';
@@ -67,13 +68,24 @@ const appRouter = createBrowserRouter([
     element: <AppLayout><CreateTrip/></AppLayout>
   },
 ]);
+import VoiceNavigation from './components/VoiceNavigation';
+import SignLanguageNavigation from './SignLanguageNavigation';
 
 export default function App() {
   return (
     <TextToSpeechProvider>
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
+    <BrowserRouter>
+      <VoiceNavigation />
+      <SignLanguageNavigation />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/flights" element={<Flights />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/hotels" element={<Hotels />} />
+        <Route path="/createtrip" element={<CreateTrip />} />
+      </Routes>
+    </BrowserRouter>
     </TextToSpeechProvider>
   )
 }
