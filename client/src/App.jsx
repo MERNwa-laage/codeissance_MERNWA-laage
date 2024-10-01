@@ -1,11 +1,9 @@
 // App.js
-import React from 'react';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from "./components/pages/Home";
 import Dashboard from "./components/pages/Dashboard";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './components/pages/Home';
-import Dashboard from './components/pages/Dashboard';
 import Flights from './components/pages/Flights';
 import Login from './components/pages/Login';
 import Hotels from './components/pages/Hotels';
@@ -19,6 +17,15 @@ const AppLayout = ({ children }) => (
     <Chatbot /> {/* Add the Chatbot component here */}
   </>
 );
+
+const tripDetails = {
+  source: "New York",
+  destination: "Paris",
+  noOfDays: 7,
+  departureDate: "2024-05-15",
+  noOfPeople: 2,
+  disability: "Wheelchair User"
+};
 
 const appRouter = createBrowserRouter([
   {
@@ -69,18 +76,18 @@ const appRouter = createBrowserRouter([
     path:'/createtrip',
     element: <AppLayout><CreateTrip/></AppLayout>
   },
+  {
+    path:'/checkout',
+    element: <AppLayout><CheckoutPage tripDetails={tripDetails}/></AppLayout>
+  },
 ]);
 import VoiceNavigation from './components/VoiceNavigation';
 import SignLanguageNavigation from './SignLanguageNavigation';
+import CheckoutPage from './components/pages/CheckoutPage';
 
 export default function App() {
   return (
     <TextToSpeechProvider>
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-    </TextToSpeechProvider>
-    <RouterProvider router={appRouter}/>
     <BrowserRouter>
       <VoiceNavigation />
       <SignLanguageNavigation />
@@ -91,7 +98,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/hotels" element={<Hotels />} />
         <Route path="/createtrip" element={<CreateTrip />} />
+        <Route path="/checkout" element={<CheckoutPage tripDetails={tripDetails}/>} />
       </Routes>
     </BrowserRouter>
-  );
+    </TextToSpeechProvider>
+  )
 }
