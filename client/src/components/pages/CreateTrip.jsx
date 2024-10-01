@@ -5,6 +5,7 @@ import { SelectBudgetOptions, SelectDisability, SelectTravelList } from '@/const
 import { Button } from '../ui/button';
 import FlightCard from '../shared/FlightCard';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../shared/Navbar';
 
 const indianAirports = [
   'DEL-delhi',

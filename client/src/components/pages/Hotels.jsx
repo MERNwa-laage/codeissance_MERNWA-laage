@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import HotelCard from '../shared/Hotelcard';
 import Navbar from '../shared/Navbar';
 import axios from 'axios';
