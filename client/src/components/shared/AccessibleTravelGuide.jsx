@@ -92,10 +92,12 @@ const AccessibleTravelGuide = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-center mb-8">Accessible Travel Guide</h1>
+    <div className='bg-gray-100'> 
+    <div className='mx-40 '>
+    <div className="container py-4 px-4  text-center">
+      <span className=" text-4xl sm:text-5xl md:text-6xl font-bold mb-4block text-blue-600 mb-2 mx-auto mt-8">Accessible Travel Guide</span>
       
-      <div className="mb-8 flex flex-col sm:flex-row gap-4">
+      <div className="mb-8 flex flex-col sm:flex-row gap-4 mt-4">
         <input
           type="text"
           placeholder="Enter destination"
@@ -127,6 +129,8 @@ const AccessibleTravelGuide = () => {
           <PlaceCard key={place.id} place={place} />
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 };
