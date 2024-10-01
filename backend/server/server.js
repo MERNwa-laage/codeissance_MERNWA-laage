@@ -7,11 +7,12 @@ import {getHotelsAndItinerary} from '../hotels/hotels.js';
 const app = express();
 const port = 3000;
 app.use(cors());
+app.use(express.json()); // Add this middleware
 
 //Flight search
 app.get('/search-flights', async (req, res) => {
     const { fromId, toId, departDate, adults, children, sort, cabinClass, currency_code } = req.query;
-    console.log(cabinClass);
+    console.log(fromId, toId, departDate, adults, children, sort, cabinClass, currency_code);
     
     try {
         // Call the searchFlights function with query parameters
@@ -44,10 +45,14 @@ app.get('/api/autocomplete', async (req, res) => {
   });
 
   //Hotels
-  app.get('/api/hotels', async (req, res) => {
+  app.post('/api/hotels', async (req, res) => {
     try {
+        console.log(req.body);
+        console.log(req.params);
+        
+        
         // Call the getHotelsAndItinerary function
-        const hotels = await getHotelsAndItinerary();
+        const hotels = await getHotelsAndItinerary(req.body);
         
         // Send the extracted hotels as a JSON response
         res.json(hotels);
