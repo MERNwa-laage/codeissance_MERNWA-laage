@@ -92,11 +92,17 @@ const AccessibleTravelGuide = () => {
   };
 
   return (
-    <div className='bg-gray-100'> 
+    <div className='bg-gray-100 pt-10'> 
     <div className='mx-40 '>
     <div className="container py-4 px-4  text-center">
       <span className=" text-4xl sm:text-5xl md:text-6xl font-bold mb-4block text-blue-600 mb-2 mx-auto mt-8">Accessible Travel Guide</span>
-      
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-4">
+                            
+                            <span className="block">Empowering Journeys for All</span>
+                        </h1>
+                        <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                            Your personalized travel assistant, providing detailed accessibility information for destinations, accommodations, and transport options tailored to your specific needs.
+                        </p>
       <div className="mb-8 flex flex-col sm:flex-row gap-4 mt-4">
         <input
           type="text"
