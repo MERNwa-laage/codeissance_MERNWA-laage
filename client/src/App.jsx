@@ -18,6 +18,15 @@ const AppLayout = ({ children }) => (
   </>
 );
 
+const tripDetails = {
+  source: "New York",
+  destination: "Paris",
+  noOfDays: 7,
+  departureDate: "2024-05-15",
+  noOfPeople: 2,
+  disability: "Wheelchair User"
+};
+
 const appRouter = createBrowserRouter([
   {
     path: '/',
@@ -67,9 +76,14 @@ const appRouter = createBrowserRouter([
     path:'/createtrip',
     element: <AppLayout><CreateTrip/></AppLayout>
   },
+  {
+    path:'/checkout',
+    element: <AppLayout><CheckoutPage tripDetails={tripDetails}/></AppLayout>
+  },
 ]);
 import VoiceNavigation from './components/VoiceNavigation';
 import SignLanguageNavigation from './SignLanguageNavigation';
+import CheckoutPage from './components/pages/CheckoutPage';
 
 export default function App() {
   return (
@@ -84,6 +98,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/hotels" element={<Hotels />} />
         <Route path="/createtrip" element={<CreateTrip />} />
+        <Route path="/checkout" element={<CheckoutPage tripDetails={tripDetails}/>} />
       </Routes>
     </BrowserRouter>
     </TextToSpeechProvider>
