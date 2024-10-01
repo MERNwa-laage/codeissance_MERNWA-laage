@@ -81,10 +81,11 @@ const indianAirports = [
 const Flights = () => {
   const location = useLocation();
     // const { formData } = location.state || {}; // Retrieve formData from state
+    const initialToId = location.state && location.state.formData ? location.state.formData.toId : '';
   const [flightResults, setFlightResults] = useState([]);
   const [formData, setFormData] = useState({
     fromId: '',
-    toId: location.state.formData.toId || '',
+    toId: initialToId,
     departDate: '',
     returnDate: '',
     adults: '1',
