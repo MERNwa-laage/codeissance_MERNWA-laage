@@ -5,6 +5,7 @@ import Chatbot from '../shared/Chatbot';
 import Footer from '../shared/Footer';
 import AccessibleTravelGuide from '../shared/AccessibleTravelGuide';
 
+
 const Home = () => {
   return (
     <div>
