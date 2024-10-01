@@ -102,7 +102,7 @@ const SignLanguageNavigation = () => {
   };
 
   return (
-    <div style={{ position: 'fixed', right: 0, bottom: 0, width: 200, height: 150 }}>
+    <div style={{ position: 'fixed', left: 0, bottom: 0, width: 200, height: 150 }}>
       <video
         ref={videoRef}
         style={{ width: '100%', height: '100%', transform: 'scaleX(-1)' }}

@@ -76,11 +76,6 @@ import SignLanguageNavigation from './SignLanguageNavigation';
 export default function App() {
   return (
     <TextToSpeechProvider>
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-    </TextToSpeechProvider>
-    <RouterProvider router={appRouter}/>
     <BrowserRouter>
       <VoiceNavigation />
       <SignLanguageNavigation />
@@ -93,5 +88,6 @@ export default function App() {
         <Route path="/createtrip" element={<CreateTrip />} />
       </Routes>
     </BrowserRouter>
+    </TextToSpeechProvider>
   );
 }

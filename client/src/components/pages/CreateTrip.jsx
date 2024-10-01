@@ -96,21 +96,25 @@ const CreateTrip = () => {
       recognitionInstance.lang = 'en-US';
 
       recognitionInstance.onresult = handleVoiceResult;
-      recognitionInstance.onend = () => setIsListening(false);
+      recognitionInstance.onend = handleRecognitionEnd;
 
       setRecognition(recognitionInstance);
     }
   }, []);
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  const handleRecognitionEnd = useCallback(() => {
+    if (isListening) {
+      recognition.start();
+    }
+  }, [isListening, recognition]);
 
   const handleVoiceResult = useCallback((event) => {
-    const command = event.results[0][0].transcript.toLowerCase().trim();
+    const command = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
     console.log('Voice command:', command);
 
-    if (command.startsWith('set destination')) {
+    if (command === 'help') {
+      speak("Available commands: Set destination to [city], Set days to [number], Set budget to [option], Set travel companion to [option], Set disability to [option], Generate trip, Read form data");
+    } else if (command.startsWith('set destination')) {
       const destination = command.replace('set destination', '').trim();
       handleInputChange('toId', destination);
       setInputValue(destination);
@@ -121,22 +125,57 @@ const CreateTrip = () => {
       speak(`Number of days set to ${days}`);
     } else if (command.startsWith('set budget')) {
       const budget = command.replace('set budget', '').trim();
-      handleInputChange('budget', budget);
-      speak(`Budget set to ${budget}`);
+      const matchedBudget = SelectBudgetOptions.find(option => 
+        option.title.toLowerCase().includes(budget)
+      );
+      if (matchedBudget) {
+        handleInputChange('budget', matchedBudget.title);
+        speak(`Budget set to ${matchedBudget.title}`);
+      } else {
+        speak("I couldn't find a matching budget option. Please try again.");
+      }
     } else if (command.startsWith('set travel companion')) {
       const companion = command.replace('set travel companion', '').trim();
-      handleInputChange('travelCompanion', companion);
-      speak(`Travel companion set to ${companion}`);
+      const matchedCompanion = SelectTravelList.find(option => 
+        option.title.toLowerCase().includes(companion)
+      );
+      if (matchedCompanion) {
+        handleInputChange('travelCompanion', matchedCompanion.title);
+        speak(`Travel companion set to ${matchedCompanion.title}`);
+      } else {
+        speak("I couldn't find a matching travel companion option. Please try again.");
+      }
     } else if (command.startsWith('set disability')) {
       const disability = command.replace('set disability', '').trim();
-      handleInputChange('disability', disability);
-      speak(`Disability set to ${disability}`);
+      const matchedDisability = SelectDisability.find(option => 
+        option.title.toLowerCase().includes(disability)
+      );
+      if (matchedDisability) {
+        handleInputChange('disability', matchedDisability.title);
+        speak(`Disability set to ${matchedDisability.title}`);
+      } else {
+        speak("I couldn't find a matching disability option. Please try again.");
+      }
     } else if (command === 'generate trip') {
       handleGenerateTrip();
+    } else if (command === 'read form data') {
+      readFormData();
     } else {
-      speak("I'm sorry, I didn't understand that command.");
+      speak("I'm sorry, I didn't understand that command. Say 'help' for a list of available commands.");
     }
-  }, [formData]);
+  }, [formData, navigate]);
+
+  const readFormData = () => {
+    let message = "Here's your current form data: ";
+    if (formData.toId) message += `Destination: ${formData.toId}. `;
+    if (formData.noOfDays) message += `Number of days: ${formData.noOfDays}. `;
+    if (formData.budget) message += `Budget: ${formData.budget}. `;
+    if (formData.travelCompanion) message += `Travel companion: ${formData.travelCompanion}. `;
+    if (formData.disability) message += `Disability: ${formData.disability}. `;
+    if (message === "Here's your current form data: ") message += "No data has been set yet.";
+    speak(message);
+  };
+
 
   const speak = (text) => {
     const speech = new SpeechSynthesisUtterance(text);
@@ -148,13 +187,15 @@ const CreateTrip = () => {
       if (isListening) {
         recognition.stop();
         setIsListening(false);
+        speak("Voice commands stopped.");
       } else {
         recognition.start();
         setIsListening(true);
-        speak("I'm listening for your commands.");
+        speak("I'm listening for your commands. Say 'help' for a list of available commands.");
       }
     } else {
       console.error('Speech recognition not supported');
+      speak("I'm sorry, but speech recognition is not supported on this device.");
     }
   };
 
@@ -204,6 +245,7 @@ const CreateTrip = () => {
     console.log(formData);
     navigate('/flights', { state: { formData } });
   };
+  console.log(formData);
 
   return (
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
@@ -218,6 +260,12 @@ const CreateTrip = () => {
       >
         {isListening ? 'Stop Listening' : 'Start Voice Command'}
       </Button>
+
+      {isListening && (
+        <p className="mt-2 text-sm text-gray-600">
+          Listening for commands... Say "help" for available commands.
+        </p>
+      )}
 
       <div className='mt-20 flex flex-col gap-10'>
         <div>
