@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card"; // Ensure this path is correct
 import { Badge } from "@/components/ui/badge";
-import { IndianRupeeIcon } from "lucide-react";
-import wheelchairAccessibleIcon from '../../assets/wheelchair-accessible-sign.png'
+import { CalendarIcon, ClockIcon, IndianRupeeIcon } from "lucide-react";
+import wheelchairAccessibleIcon from '../../assets/wheelchair-accessible-sign.png';
 
-const FlightCard = ({ flight, onSelect }) => {
+const FlightCard = ({ flight, onSelect, isSelected }) => {
   const departureDate = new Date(flight.departureTime);
   const arrivalDate = new Date(flight.arrivalTime);
 
@@ -28,7 +28,7 @@ const FlightCard = ({ flight, onSelect }) => {
   }
 
   return (
-    <Card className="mb-4 hover:shadow-lg transition-shadow">
+    <Card className={`mb-4 hover:shadow-lg transition-shadow ${isSelected ? 'border-2 border-blue-500 bg-blue-100' : ''}`}>
       <CardContent className="p-6">
         <div className="flex justify-between items-center mb-4">
           <div>
@@ -49,16 +49,11 @@ const FlightCard = ({ flight, onSelect }) => {
             {parseFloat(flight.totalCost.split(' ')[1]).toFixed(2)}
           </Badge>
         </div>
-
         <div className="flex justify-between items-center">
-          {/* Departure City and Time */}
           <div className="text-center">
-            <p className="text-sm text-gray-500">{flight.departureCity}</p>
             <p className="text-xl font-bold">{formatTime(departureDate)}</p>
             <p className="text-sm text-gray-500">{formatDate(departureDate)}</p>
           </div>
-
-          {/* Duration and Non-stop indicator */}
           <div className="flex flex-col items-center">
             <p className="text-sm text-gray-500">{getDuration(departureDate, arrivalDate)}</p>
             <div className="w-32 h-0.5 bg-gray-300 my-2 relative">
@@ -66,22 +61,18 @@ const FlightCard = ({ flight, onSelect }) => {
             </div>
             <p className="text-xs text-gray-400">Non-stop</p>
           </div>
-
-          {/* Arrival City and Time */}
           <div className="text-center">
-            <p className="text-sm text-gray-500">{flight.arrivalCity}</p>
             <p className="text-xl font-bold">{formatTime(arrivalDate)}</p>
             <p className="text-sm text-gray-500">{formatDate(arrivalDate)}</p>
           </div>
         </div>
-
         {/* Select Button */}
-        <div className="flex justify-end mt-4">
-          <button 
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={handleSelect} // Forward flight data
+        <div className="mt-4">
+          <button
+            onClick={() => onSelect(flight)} // Call the onSelect function passed as a prop
+            className={`py-2 px-4 rounded transition-colors ${isSelected ? 'bg-green-500' : 'bg-blue-500'} text-white hover:${isSelected ? 'bg-green-600' : 'bg-blue-600'}`}
           >
-            Select
+            {isSelected ? 'Selected' : 'Select Flight'}
           </button>
         </div>
       </CardContent>

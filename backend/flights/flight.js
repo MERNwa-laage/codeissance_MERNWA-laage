@@ -8,7 +8,7 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
             fromId: fromId || 'BOM.AIRPORT',
             toId: toId || 'DEL.AIRPORT',
             departDate: departDate || '2024-10-04',
-            returnDate: returnDate || null,
+            // returnDate: returnDate || null,
             pageNo: '1',
             adults: adults || '1',
             children: children || '0,17',
@@ -18,7 +18,7 @@ export const searchFlights = async (fromId, toId, departDate, adults, children, 
         },
         headers: {
             'x-rapidapi-host': 'booking-com15.p.rapidapi.com',
-            'x-rapidapi-key': '26e2ba2627msh59cbe6ae0c921a9p1ea339jsnf2184812b96d', // Secure this key in production!
+            'x-rapidapi-key': '781d6b5670msh3c1fc65760e429ap11a851jsn362da7e3678c', // Secure this key in production!
         },
     };
 
