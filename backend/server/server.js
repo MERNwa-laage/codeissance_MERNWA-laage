@@ -27,6 +27,7 @@ app.get('/search-flights', async (req, res) => {
     }
 });
 
+
 //Autocomplete suggestions
 app.get('/api/autocomplete', async (req, res) => {
     const { input } = req.query;

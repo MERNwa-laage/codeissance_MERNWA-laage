@@ -3,7 +3,7 @@ import HotelCard from '../shared/Hotelcard';
 import Navbar from '../shared/Navbar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import VoiceHover from './VoiceHover';
 const Hotels = () => {
     const location = useLocation();
     const [hotelData, setHotelData] = useState([]);
@@ -31,9 +31,11 @@ const Hotels = () => {
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold mb-6">Our Hotels</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
+                <VoiceHover>
                     {hotelData.map((hotel, index) => (
                         <HotelCard key={index} hotel={hotel} />
                     ))}
+                    </VoiceHover>
                 </div>
             </div>
         </div>

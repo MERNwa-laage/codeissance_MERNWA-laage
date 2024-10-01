@@ -10,6 +10,7 @@ import Hotels from './components/pages/Hotels';
 import CreateTrip from './components/pages/CreateTrip';
 import { TextToSpeechProvider } from './components/shared/useTextToSpeech';
 import Chatbot from './components/shared/Chatbot'; // Import the Chatbot component
+import Maps from './components/pages/Maps'
 
 const AppLayout = ({ children }) => (
   <>
@@ -99,6 +100,7 @@ export default function App() {
         <Route path="/hotels" element={<Hotels />} />
         <Route path="/createtrip" element={<CreateTrip />} />
         <Route path="/checkout" element={<CheckoutPage tripDetails={tripDetails}/>} />
+        <Route path="/maps" element={<Maps />} />
       </Routes>
     </BrowserRouter>
     </TextToSpeechProvider>

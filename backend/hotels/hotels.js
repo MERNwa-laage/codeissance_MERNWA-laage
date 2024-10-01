@@ -1,67 +1,62 @@
-import axios from 'axios';
+import http from 'https';
 
-const API_KEY = 'AIzaSyBFvczia282iXn0-LlBP8j-4cxxTcl4A2I'; // Replace with your actual API key
-
+// Function to get hotels and itinerary
 export const getHotelsAndItinerary = async (hotelData) => {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
     // Destructure the necessary properties
-    const { locationDescription, noOfDays, budget, travelCompanion } = hotelData;
+    const { locationDescription } = hotelData;
 
-    // Correct string interpolation using template literals
-    const data = {
-        "contents": [
-            {
-                "role": "user",
-                "parts": [
-                    {
-                        "text": `Generate Travel Plan for Location: ${locationDescription}, for ${noOfDays} Days for a disabled ${travelCompanion} with a ${budget} budget, Give me a Hotels (that support wheelchair assistance) options list with HotelName, HotelAddress, PriceINR, hotelImageUrl, geoCoordinates, rating, descriptions(which describes the assistance the hotel can provide for the person) and suggest itinerary with placeName, PlaceDetails, PlaceImageUrl, GeoCoordinates, ticketPricing, TimeToTravel each of the location for ${noOfDays} days with each day plan with best time to visit in JSON format. Make sure that there are no blank spaces between the json names.`
-                    }
-                ]
-            },
-            {
-                "role": "model",
-                "parts": [
-                    {
-                        "text": "..."
-                    }
-                ]
-            }
-        ],
-        "generationConfig": {
-            "temperature": 1,
-            "topK": 64,
-            "topP": 0.95,
-            "maxOutputTokens": 8192,
-            "responseMimeType": "application/json"
+    // Construct the path dynamically using locationDescription
+    const options = {
+        method: 'GET',
+        hostname: 'booking-com15.p.rapidapi.com',
+        port: null,
+        path: `/api/v1/hotels/searchDestination?query=${encodeURIComponent(locationDescription)}`, // encode location
+        headers: {
+            'x-rapidapi-key': '781d6b5670msh3c1fc65760e429ap11a851jsn362da7e3678c',
+            'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
         }
     };
 
-    try {
-        const response = await axios.post(url, data, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
+    return new Promise((resolve, reject) => {
+        const req = http.request(options, (res) => {
+            const chunks = [];
+
+            res.on('data', (chunk) => {
+                chunks.push(chunk);
+            });
+
+            res.on('end', () => {
+                const body = Buffer.concat(chunks).toString();
+                try {
+                    // Assuming the API response is JSON, attempt to parse it
+                    const parsedResponse = JSON.parse(body);
+                    console.log(parsedResponse); // Log the response for debugging
+
+                    // Process and return hotel information (adjust as per response structure)
+                    if (parsedResponse && Array.isArray(parsedResponse.data)) {
+                        const hotels = parsedResponse.results.map(hotel => ({
+                            name: hotel.hotelName,
+                            address: hotel.hotelAddress,
+                            image: hotel.hotelImageUrl,
+                            rating: hotel.rating,
+                            pricing: hotel.PriceINR,
+                            coordinates: hotel.geoCoordinates
+                        }));
+                        resolve(hotels);
+                    } else {
+                        reject(new Error("Unexpected structure: 'results' is not an array."));
+                    }
+                } catch (error) {
+                    reject(new Error("Error parsing JSON response: " + error.message));
+                }
+            });
         });
 
-        const output = response.data.candidates[0].content.parts[0].text;
-        const joutput = JSON.parse(output);
-        console.log(joutput);
-        
-        if (Array.isArray(joutput.hotels)) {
-            return joutput.hotels.map(hotel => ({
-                name: hotel.HotelName,
-                image: hotel.hotelImageUrl,
-                rating: hotel.rating,
-                description: hotel.descriptions,
-                pricing: hotel.PriceINR,
-            }));
-        } else {
-            throw new Error("Unexpected structure: hotels is not an array.");
-        }
-    } catch (error) {
-        console.error('Error fetching hotels and itinerary:', error); // Added console error for better debugging
-        throw new Error(error.response ? error.response.data : error.message);
-    }
-};
+        req.on('error', (error) => {
+            console.error('Error fetching hotels and itinerary:', error);
+            reject(new Error(error.message));
+        });
 
+        req.end();
+    });
+};

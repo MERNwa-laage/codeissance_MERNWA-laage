@@ -130,6 +130,7 @@ const Flights = () => {
     
     <div>
       <Navbar />
+      <VoiceHover>
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-4">
         <form className="flex flex-wrap items-end gap-4" onSubmit={handleSubmit}>
           {/* From Select */}
@@ -248,8 +249,10 @@ const Flights = () => {
           {error && <p className="text-red-500 mt-2">{error}</p>}
         </form>
       </div>
+      </VoiceHover>
 
       <div className='mx-8 sm:mx-16 md:mx-24 mt-8'>
+ 
         {flightResults.length > 0 ? (
           <>
             <h2 className="text-2xl font-bold mb-6">Flight Results</h2>
@@ -262,8 +265,10 @@ const Flights = () => {
         ) : (
           <h2 className="text-2xl font-bold mb-6">No Flights Available</h2>
         )}
+       
       </div>
     </div>
+     
   );
 };
 
