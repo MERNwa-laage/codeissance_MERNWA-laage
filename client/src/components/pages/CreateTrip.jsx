@@ -83,13 +83,16 @@ const indianAirports = [
 // }, {});
 
 const CreateTrip = () => {
+  let arr = {};
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [fromInputValue, setFromInputValue] = useState('');
   const [destinationSuggestions, setDestinationSuggestions] = useState([]);
   const [selectedFlight, setSelectedFlight] = useState(null);
   const [sourceSuggestions, setSourceSuggestions] = useState([]);
   const [formData, setFormData] = useState({
-    destination: '',
+    fromID: '',
+    toID: '',
     noOfDays: '',
     budget: '',
     travelCompanion: '',
