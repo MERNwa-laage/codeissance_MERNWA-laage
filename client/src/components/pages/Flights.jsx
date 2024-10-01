@@ -93,7 +93,7 @@ const Flights = () => {
     sort: 'CHEAPEST',
     cabinClass: 'ECONOMY',
   });
-  console.log(location.state.formData.toId);
+  // console.log(location.state.formData.toId);
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
