@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import HotelCard from '../shared/HotelCard';
+import React from 'react';
+import HotelCard from '../shared/Hotelcard';
 import Navbar from '../shared/Navbar';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';

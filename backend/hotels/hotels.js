@@ -64,3 +64,4 @@ export const getHotelsAndItinerary = async (hotelData) => {
         throw new Error(error.response ? error.response.data : error.message);
     }
 };
+

@@ -2,30 +2,31 @@ export const SelectTravelList=[
     {
         id:1,
         title:'Just Me',
-        desc:'A sole travel exp',
-        icon:'💀',
+        desc:'A solo travel experience',
+        icon:'🤵',
         people:'1 person'
     },
     {
         id:2,
         title:'Couple',
-        desc:'A sole travel exp',
-        icon:'💀',
-        people:'1 person'
+        desc:'Two travels in tandem',
+        icon:'🧑‍🤝‍🧑',
+        people:'2 people'
     },
     {
         id:3,
         title:'Family',
-        desc:'A sole travel exp',
-        icon:'💀',
-        people:'1 person'
+        desc:'A family of fun loving adventures',
+        icon:'👨‍👩‍👧‍👦',
+        people:'3 to 5 people'
     },
     {
         id:4,
         title:'Friends',
-        desc:'A sole travel exp',
-        icon:'💀',
-        people:'1 person'
+        desc:'A bunch of thrill seekers'
+        ,
+        icon:'🫂',
+        people:'5 to 10 people'
     },
 ]
 
@@ -66,4 +67,4 @@ export const SelectBudgetOptions=[
         id:1,
         title:'Mute',
     },
- ] 
+ ]

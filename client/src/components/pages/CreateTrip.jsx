@@ -333,6 +333,8 @@ const handleFlightSelect = (flight) => {
 };
 
   return (
+    <div>
+      <Navbar/>
     <div className='sm:px-10 md:px-32 lg:px-56 xl:px-72 px-5 mt-10'>
       <h1 className='font-bold text-3xl'>Tell us about your travel preferences</h1>
       <p className='mt-3 text-gray-500 text-xl'>
@@ -404,8 +406,8 @@ const handleFlightSelect = (flight) => {
   
         {/* Budget Options */}
         <div>
-          <h2 className='text-xl my-3 font-medium'>What is your budget?</h2>
-          <div className='grid grid-cols-3 gap-5 mt-5'>
+          <h2 className='text-xl my-3 font-medium'>What is your budget for this trip?</h2>
+          <div className='grid grid-cols-4 gap-5 mt-5'>
             {SelectBudgetOptions.map((item, index) => (
               <div 
                 key={index} 
