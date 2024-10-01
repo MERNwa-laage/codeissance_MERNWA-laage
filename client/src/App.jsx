@@ -75,6 +75,5 @@ export default function App() {
       <RouterProvider router={appRouter} />
     </div>
     </TextToSpeechProvider>
-    <RouterProvider router={appRouter}/>
-  );
+  )
 }
