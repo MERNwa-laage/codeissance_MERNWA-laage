@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import HotelCard from '../shared/HotelCard';
 import Navbar from '../shared/Navbar';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const Hotels = () => {
+    const location = useLocation();
     const [hotelData, setHotelData] = useState([]);
 
     useEffect(() => {
         const fetchHotels = async () => {
+            if (!location.state) return;
             try {
-                const response = await axios.get('http://localhost:3000/api/hotels'); // Adjust the URL as necessary
+                console.log(location.state);
+                
+                // Assuming location.state contains the necessary data to be sent
+                const response = await axios.post('http://localhost:3000/api/hotels', location.state); // Adjust the URL as necessary
                 setHotelData(response.data); // Set the state with the fetched data
             } catch (error) {
                 console.error('Error fetching hotels:', error);
@@ -17,9 +23,7 @@ const Hotels = () => {
         };
 
         fetchHotels();
-        console.log(hotelData);
-        
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+    }, [location.state]); // Empty dependency array ensures this runs once when the component mounts
 
     return (
         <div>
